@@ -1,0 +1,214 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Point of Interests v0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2013-10-24 20:34:52+0000\n"
+"Last-Translator: horttcore <me@horttcore.de>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: CSL v1.x\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: \n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes"
+
+#: custom-post-type-pois.php:161
+#@ custom-post-type-poi
+msgid "Street"
+msgstr "Straße"
+
+#: custom-post-type-pois.php:161
+#@ custom-post-type-poi
+msgid "Nr"
+msgstr "Nr"
+
+#: custom-post-type-pois.php:173
+#@ custom-post-type-poi
+msgid "Region"
+msgstr "Bundesland"
+
+#: custom-post-type-pois.php:173
+#@ custom-post-type-poi
+msgid "Country"
+msgstr "Land"
+
+#: custom-post-type-pois.php:165
+#@ custom-post-type-poi
+msgid "ZIP"
+msgstr "PLZ"
+
+#: custom-post-type-pois.php:165
+#@ custom-post-type-poi
+msgid "City"
+msgstr "Stadt"
+
+#: custom-post-type-pois.php:177
+#@ custom-post-type-poi
+msgid "Latitude"
+msgstr "Breitengrad"
+
+#: custom-post-type-pois.php:177
+#@ custom-post-type-poi
+msgid "Longitude"
+msgstr "Längengrad"
+
+#: custom-post-type-pois.php:181
+#@ custom-post-type-poi
+msgid "Note: Latitude and Longitude will be checked against Google GeoAPI"
+msgstr "Hinweis: Breitengrad und Längengrad werden über die Google GeoAPI geladen"
+
+#: custom-post-type-pois.php:225
+#, php-format
+#@ custom-post-type-poi
+msgid "Point of Interest updated. <a href=\"%s\">View Point of Interest</a>"
+msgstr "Die Sehenswürdigkeit wurde aktualisiert. <a href=\"%s\">Sehenswürdigkeit ansehen</a>"
+
+#: custom-post-type-pois.php:226
+#@ custom-post-type-poi
+msgid "Custom field updated."
+msgstr "Benutzerdefiniertes Feld aktualisiert."
+
+#: custom-post-type-pois.php:227
+#@ custom-post-type-poi
+msgid "Custom field deleted."
+msgstr "Benutzerdefiniertes Feld gelöscht"
+
+#: custom-post-type-pois.php:228
+#@ custom-post-type-poi
+msgid "Point of Interest updated."
+msgstr "Sehenswürdigkeit aktualisiert."
+
+#. translators: %s: date and time of the revision
+#: custom-post-type-pois.php:230
+#, php-format
+#@ custom-post-type-poi
+msgid "Point of Interest restored to revision from %s"
+msgstr "Sehenswürdigkeit aus Überarbeitung vom %s wiederhergestellt"
+
+#: custom-post-type-pois.php:231
+#, php-format
+#@ custom-post-type-poi
+msgid "Point of Interest published. <a href=\"%s\">View Point of Interest</a>"
+msgstr "Sehenswürdigkeit veröffentlicht. <a href=\"%s\">Sehenswürdigkeit ansehen</a>"
+
+#: custom-post-type-pois.php:232
+#@ custom-post-type-poi
+msgid "Point of Interest saved."
+msgstr "Sehenswürdigkeit gespeichert."
+
+#: custom-post-type-pois.php:233
+#, php-format
+#@ custom-post-type-poi
+msgid "Point of Interest submitted. <a target=\"_blank\" href=\"%s\">Preview Point of Interest</a>"
+msgstr "Sehenswürdigkeit übertragen. <a target=\"_blank\" href=\"%s\">Sehenswürdigkeit ansehen</a>"
+
+#: custom-post-type-pois.php:234
+#, php-format
+#@ custom-post-type-poi
+msgid "Point of Interest scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Preview Point of Interest</a>"
+msgstr "Veröffentlichung geplant für: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Vorschau</a>"
+
+#: custom-post-type-pois.php:234
+#@ default
+msgid "M j, Y @ G:i"
+msgstr ""
+
+#: custom-post-type-pois.php:235
+#, php-format
+#@ custom-post-type-poi
+msgid "Point of Interest draft updated. <a target=\"_blank\" href=\"%s\">Preview Point of Interest</a>"
+msgstr "Der Sehenswürdigkeitsentwurf wurde aktualisiert. <a target=\"_blank\" href=\"%s\">Sehenswürdigkeit ansehen</a>"
+
+#: custom-post-type-pois.php:254
+#@ custom-post-type-poi
+msgctxt "post type general name"
+msgid "Point of Interests"
+msgstr "Sehenswürdigkeiten"
+
+#: custom-post-type-pois.php:255
+#@ custom-post-type-poi
+msgctxt "post type singular name"
+msgid "Point of Interest"
+msgstr "Sehenswürdigkeit"
+
+#: custom-post-type-pois.php:256
+#@ custom-post-type-poi
+msgctxt "Point of Interest"
+msgid "Add New"
+msgstr "Sehenswürdigkeit hinzufügen"
+
+#: custom-post-type-pois.php:257
+#@ custom-post-type-poi
+msgid "Add New Point of Interest"
+msgstr "Sehenswürdigkeit hinzufügen"
+
+#: custom-post-type-pois.php:258
+#@ custom-post-type-poi
+msgid "Edit Point of Interest"
+msgstr "Sehenswürdigkeit bearbeiten"
+
+#: custom-post-type-pois.php:259
+#@ custom-post-type-poi
+msgid "New Point of Interest"
+msgstr "Neue Sehenswürdigkeit"
+
+#: custom-post-type-pois.php:260
+#@ custom-post-type-poi
+msgid "View Point of Interest"
+msgstr "Sehenswürdigkeit ansehen"
+
+#: custom-post-type-pois.php:261
+#@ custom-post-type-poi
+msgid "Search Point of Interest"
+msgstr "Sehenswürdigkeiten durchsuchen"
+
+#: custom-post-type-pois.php:262
+#@ custom-post-type-poi
+msgid "No Point of Interests found"
+msgstr "Keine Sehenswürdigkeiten gefunden"
+
+#: custom-post-type-pois.php:263
+#@ custom-post-type-poi
+msgid "No Point of Interests found in Trash"
+msgstr "Keine Sehenswürdigkeiten im Papierkorb gefunden"
+
+#: custom-post-type-pois.php:265
+#@ custom-post-type-poi
+msgid "Point of Interests"
+msgstr "Sehenswürdigkeiten"
+
+#: custom-post-type-pois.php:275
+#@ custom-post-type-poi
+msgctxt "Post Type Slug"
+msgid "point-of-interest"
+msgstr "sehenswuerdigkeit"
+
+#: custom-post-type-pois.php:56
+#@ custom-post-type-poi
+msgid "Map"
+msgstr "Karte"
+
+#: custom-post-type-pois.php:110
+#: custom-post-type-pois.php:128
+#@ custom-post-type-poi
+msgid "Please enter a location for this Point of Interest to display a map"
+msgstr "Sie müssen einen Standort angeben damit eine Karte dargestellt werden kann."
+
+#: custom-post-type-pois.php:169
+#@ custom-post-type-poi
+msgid "Address additional"
+msgstr "Adresszusatz"
+
+#: custom-post-type-pois.php:55
+#@ custom-post-type-poi
+msgid "Location"
+msgstr "Standort"
+
