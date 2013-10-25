@@ -42,6 +42,11 @@ A custom post type to manage point of interests
 
 ## Changelog
 
+### v0.2
+
+* Enhancement: Manual location check
+* Bugfix: GeoAPI was not saved.
+
 ### v0.1
 
 * Initial release

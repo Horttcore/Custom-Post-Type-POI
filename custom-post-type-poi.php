@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: Point of Interests
+Plugin Name: Custom Post Type Point of Interests
 Plugin URI: http://horttcore.de
-Description: Custom Post Type Point of Interests
-Version: 0.1
+Description: A custom post type to manage point of interests
+Version: 0.2
 Author: Ralf Hortt
 Author URI: http://horttcore.de
 License: GPL2
@@ -31,10 +31,10 @@ class Custom_Post_Type_POI
 	public function __construct()
 	{
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
-		#add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
-		#add_action( 'admin_print_styles-post.php', array( $this, 'admin_enqueue_styles' ), 1000 );
-		#add_action( 'admin_print_styles-post-new.php', array( $this, 'admin_enqueue_styles' ), 1000 );
+		add_action( 'admin_print_scripts-post.php', array( $this, 'admin_enqueue_scripts' ), 1000 );
+		add_action( 'admin_print_scripts-post-new.php', array( $this, 'admin_enqueue_scripts' ), 1000 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_styles' ), 1000 );
+		add_action( 'wp_ajax_get_lat_lng', array( $this, 'get_lat_lng' ) );
 		add_action( 'init', array( $this, 'register_post_type' ) );
 		add_filter( 'post_updated_messages', array( $this, 'post_updated_messages' ) );
 		add_action( 'save_post', array( $this, 'save_post' ) );
@@ -89,6 +89,53 @@ class Custom_Post_Type_POI
 
 
 	/**
+	 * Register styles
+	 *
+	 * @access public
+	 * @return void
+	 * @author Ralf Hortt
+	 **/
+	public function get_lat_lng( $args = FALSE, $return = FALSE )
+	{
+		if ( FALSE === $args || empty( $args ) ) :
+
+			$args = array(
+				$_POST['street'],
+				$_POST['number'],
+				$_POST['zip'],
+				$_POST['city'],
+				$_POST['country'],
+			);
+
+		endif;
+
+		$args = array_map( 'sanitize_text_field', $args );
+		$args = array_map( 'urlencode', $args );
+
+		$url = 'http://maps.googleapis.com/maps/api/geocode/json?address=' . implode( '+', $args ) . '&sensor=false';
+
+		$response = wp_remote_get( $url );
+		$response = json_decode( wp_remote_retrieve_body( $response ) );
+
+		if ( isset($response->results[0]->geometry->location) ) :
+
+			$lat = $response->results[0]->geometry->location->lat;
+			$lng = $response->results[0]->geometry->location->lng;
+			$data = array( 'latitude' => $lat, 'longitude' => $lng );
+
+			if ( TRUE === $return ) :
+				return $data;
+			else :
+				die( json_encode( $data ) );
+			endif;
+
+		endif;
+
+	}
+
+
+
+	/**
 	 * Map
 	 *
 	 * @static
@@ -133,7 +180,7 @@ class Custom_Post_Type_POI
 			else :
 
 				?>
-				<iframe width="<?php echo $options['width'] ?>" height="<?php echo $options['height'] ?>" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.de/maps?f=q&amp;source=s_q&amp;hl=de&amp;geocode=&amp;q=<?php echo implode( '+', $args ) ?>&amp;ie=UTF8&amp;output=embed"></iframe><br />
+				<iframe width="<?php echo $options['width'] ?>" height="<?php echo $options['height'] ?>" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.de/maps?f=q&amp;source=s_q&amp;hl=de&amp;geocode=&amp;q=<?php echo implode( '+', $args ) ?>&amp;ie=UTF8&amp;output=embed"></iframe><br />
 				<small><a href="https://maps.google.de/maps?f=q&amp;source=s_q&amp;hl=de&amp;geocode=&amp;q=<?php echo implode( '+', $args ) ?>&amp;ie=UTF8">Größere Kartenansicht</a></small>
 				<?php
 
@@ -184,7 +231,7 @@ class Custom_Post_Type_POI
 				<th><label for="poi-lat"><?php _e( 'Latitude', 'custom-post-type-poi'  ); ?></label> / <label for="poi-lng"><?php _e( 'Longitude', 'custom-post-type-poi'  ); ?></label></th>
 				<td>
 					<input type="text" name="poi-lat" id="poi-lat" value="<?php if ( isset( $location['lat'] ) ) echo $location['lat'] ?>" />
-					<input type="text" name="poi-lng" id="poi-lng" value="<?php if ( isset( $location['lng'] ) ) echo $location['lng'] ?>" /><br>
+					<input type="text" name="poi-lng" id="poi-lng" value="<?php if ( isset( $location['lng'] ) ) echo $location['lng'] ?>" /> <a href="#" class="get-lat-lng"><?php _e( 'Get latitude / longitude', 'custom-post-type-poi' ); ?></a><br>
 					<small><?php _e( 'Note: Latitude and Longitude will be checked against Google GeoAPI', 'custom-post-type-poi' ); ?></small>
 				</td>
 			</tr>
@@ -321,18 +368,9 @@ class Custom_Post_Type_POI
 				$_POST['poi-country'],
 			);
 
-			$args = array_map( 'sanitize_text_field', $args );
-			$args = array_map( 'urlencode', $args );
-
-			$url = 'http://maps.googleapis.com/maps/api/geocode/json?address=' . implode( '+', $args ) . '&sensor=false';
-
-			$response = wp_remote_get( $url );
-			$response = json_decode( wp_remote_retrieve_body( $response ) );
-
-			if ( isset($response->results[0]->geometry->location) ) :
-				$lat = $response->results[0]->geometry->location->lat;
-				$lng = $response->results[0]->geometry->location->lng;
-			endif;
+			$latlng = $this->get_lat_lng( $args, TRUE );
+			$lat = $latlng['latitude'];
+			$lng = $latlng['longitude'];
 
 		endif;
 
@@ -350,6 +388,12 @@ class Custom_Post_Type_POI
 				'lat' => $_POST['poi-lat'],
 				'lng' => $_POST['poi-lng'],
 			);
+
+			if ( isset( $lat ) )
+				$poi['lat'] = $lat;
+
+			if ( isset( $lng ) )
+				$poi['lng'] = $lng;
 
 			$poi = array_map( 'sanitize_text_field', $poi );
 
