@@ -25,11 +25,11 @@ class Custom_Post_Type_POI
 	 * Plugin constructor
 	 *
 	 * @access public
-	 * @return void
 	 * @author Ralf Hortt
 	 **/
 	public function __construct()
 	{
+
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 		add_action( 'admin_print_scripts-post.php', array( $this, 'admin_enqueue_scripts' ), 1000 );
 		add_action( 'admin_print_scripts-post-new.php', array( $this, 'admin_enqueue_scripts' ), 1000 );
@@ -40,7 +40,8 @@ class Custom_Post_Type_POI
 		add_action( 'save_post', array( $this, 'save_post' ) );
 
 		load_plugin_textdomain( 'custom-post-type-poi', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/'  );
-	}
+
+	} // end __construct
 
 
 
@@ -48,14 +49,15 @@ class Custom_Post_Type_POI
 	 * Add meta boxes
 	 *
 	 * @access public
-	 * @return void
 	 * @author Ralf Hortt
 	 **/
 	public function add_meta_boxes()
 	{
+
 		add_meta_box( 'poi-info', __( 'Location', 'custom-post-type-poi' ), array( $this, 'metabox_poi_info' ), 'poi' );
 		add_meta_box( 'poi-map', __( 'Map', 'custom-post-type-poi' ), array( $this, 'metabox_poi_map' ), 'poi' );
-	}
+
+	} // end add_meta_boxes
 
 
 
@@ -63,13 +65,14 @@ class Custom_Post_Type_POI
 	 * Register scripts
 	 *
 	 * @access public
-	 * @return void
 	 * @author Ralf Hortt
 	 **/
 	public function admin_enqueue_scripts()
 	{
+
 		wp_register_script( 'custom-post-type-poi-admin', plugins_url( dirname( plugin_basename( __FILE__ ) ) . '/javascript/custom-post-type-poi-admin.js' ), array( 'jquery', 'jquery-ui-core', 'jquery-ui-datepicker' ), FALSE, TRUE );
-	}
+
+	} // end admin_enqueue_scripts
 
 
 
@@ -77,14 +80,15 @@ class Custom_Post_Type_POI
 	 * Register styles
 	 *
 	 * @access public
-	 * @return void
 	 * @author Ralf Hortt
 	 **/
 	public function admin_enqueue_styles()
 	{
+
 		wp_register_style( 'custom-post-type-poi-admin', plugins_url( dirname( plugin_basename( __FILE__ ) ) . '/css/custom-post-type-poi-admin.css' ) );
 		wp_enqueue_style( 'custom-post-type-poi-admin' );
-	}
+
+	} // end admin_enqueue_styles
 
 
 
@@ -92,11 +96,12 @@ class Custom_Post_Type_POI
 	 * Register styles
 	 *
 	 * @access public
-	 * @return void
+	 * @return json die/array Latitude and longitude
 	 * @author Ralf Hortt
 	 **/
 	public function get_lat_lng( $args = FALSE, $return = FALSE )
 	{
+
 		if ( FALSE === $args || empty( $args ) ) :
 
 			$args = array(
@@ -124,14 +129,14 @@ class Custom_Post_Type_POI
 			$data = array( 'latitude' => $lat, 'longitude' => $lng );
 
 			if ( TRUE === $return ) :
-				return $data;
+				return apply_filters( 'poi-get-lat-lng', $data, $args );
 			else :
-				die( json_encode( $data ) );
+				die( json_encode( apply_filters( 'poi-get-lat-lng', $data, $args ) ) );
 			endif;
 
 		endif;
 
-	}
+	} // end get_lat_lng
 
 
 
@@ -188,7 +193,7 @@ class Custom_Post_Type_POI
 
 		endif;
 
-	}
+	} // end map
 
 
 
@@ -201,6 +206,7 @@ class Custom_Post_Type_POI
 	 **/
 	public function metabox_poi_info( $post )
 	{
+
 		$location = apply_filters( 'poi-location', get_post_meta( $post->ID, '_poi-location', TRUE ) );
 		wp_enqueue_script( 'custom-post-type-poi-admin' );
 		?>
@@ -245,7 +251,7 @@ class Custom_Post_Type_POI
 		<?php
 		wp_nonce_field( 'save-poi-info', 'poi-info-nonce' );
 
-	}
+	} // end metabox_poi_info
 
 
 
@@ -261,7 +267,7 @@ class Custom_Post_Type_POI
 
 		$this->map( $post->ID );
 
-	}
+	} // end metabox_poi_map
 
 
 
@@ -274,6 +280,7 @@ class Custom_Post_Type_POI
 	 * @author Ralf Hortt
 	 **/
 	public function post_updated_messages( $messages ) {
+
 		global $post, $post_ID;
 
 		$messages['poi'] = array(
@@ -292,7 +299,8 @@ class Custom_Post_Type_POI
 		);
 
 		return $messages;
-	}
+
+	} // end post_updated_messages
 
 
 
@@ -306,6 +314,7 @@ class Custom_Post_Type_POI
 	 */
 	public function register_post_type()
 	{
+
 		$labels = array(
 			'name' => _x( 'Point of Interests', 'post type general name', 'custom-post-type-poi' ),
 			'singular_name' => _x( 'Point of Interest', 'post type singular name', 'custom-post-type-poi' ),
@@ -337,8 +346,9 @@ class Custom_Post_Type_POI
 			'menu_icon' => '',
 		);
 
-		register_post_type( 'poi', $args);
-	}
+		register_post_type( 'poi', $args );
+
+	} // end register_post_type
 
 
 
@@ -352,6 +362,7 @@ class Custom_Post_Type_POI
 	 **/
 	public function save_post( $post_id )
 	{
+
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
 			return;
 
@@ -397,7 +408,7 @@ class Custom_Post_Type_POI
 
 			$poi = array_map( 'sanitize_text_field', $poi );
 
-			update_post_meta( $post_id, '_poi-location', apply_filters( 'poi-location-save', $poi ) );
+			update_post_meta( $post_id, '_poi-location', apply_filters( 'poi-location-save', $poi, $post_id ) );
 
 			do_action( 'save-poi-meta', $poi );
 
@@ -407,10 +418,10 @@ class Custom_Post_Type_POI
 
 		endif;
 
-	}
+	} // end save_post
 
 
 
-}
+} // end Custom_Post_Type_POI
 
 new Custom_Post_Type_POI;
