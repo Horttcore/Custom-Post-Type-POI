@@ -39,8 +39,14 @@ A custom post type to manage point of interests
 
 * `poi-location` - Get the location data
 * `poi-location-save` - The location data that is saved into post_meta
+* `poi-get-lat-lng` - Get latitude longitude
 
 ## Changelog
+
+### v0.3
+
+* Added hook: `poi-get-lat-lng`
+* Enhancement: Cleanup
 
 ### v0.2
 
